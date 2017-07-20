@@ -1,29 +1,38 @@
 <?php
 
+namespace Symbiote\MultiValueField\Tests;
+
+use SilverStripe\Dev\Debug;
 use SilverStripe\Dev\SapphireTest;
-use SilverStripe\Dev\TestOnly;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBField;
 use Symbiote\MultiValueField\Fields\MultiValueField;
+use Symbiote\MultiValueField\Tests\TestOnly\MultiValueFieldTest_DataObject;
 
 /**
  * @author Marcus Nyeholt <marcus@symbiote.com.au>
  */
 class MultiValueFieldTest extends SapphireTest {
 
-	protected $extraDataObjects = array(
-		'MultiValueFieldTest_DataObject'
+    protected static $extra_dataobjects = array(
+		MultiValueFieldTest_DataObject::class
 	);
+
+    //protected static $fixture_file = 'fixtures.yml';
 
 	public function testMultiValueField() {
 		$first = array('One', 'Two', 'Three');
 
-		$obj = new MultiValueFieldTest_DataObject();
+		//$obj = $this->objFromFixture(MultiValueFieldTest_DataObject::class, 'default');
+        $obj = new MultiValueFieldTest_DataObject();
 		$obj->MVField = $first;
 		$obj->write();
+        //Debug::show(print_r($obj->MVField));
+        //Debug::show(($obj->ID));
 
 		$this->assertTrue($obj->isInDB());
-		$obj = DataObject::get_by_id('MultiValueFieldTest_DataObject', $obj->ID);
+		$obj = MultiValueFieldTest_DataObject::get()->byID($obj->ID);
+        //Debug::show($obj);
 
 		$this->assertNotNull($obj->MVField);
 		$this->assertEquals($first, $obj->MVField->getValues());
@@ -50,16 +59,5 @@ class MultiValueFieldTest extends SapphireTest {
 		$field->setValue(null);
 		$this->assertTrue($field->isChanged());
 	}
-
-}
-
-/**
- * @ignore
- */
-class MultiValueFieldTest_DataObject extends DataObject implements TestOnly {
-
-	private static $db = array(
-		'MVField' => 'MultiValueField'
-	);
 
 }

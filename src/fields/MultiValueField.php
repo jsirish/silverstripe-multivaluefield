@@ -3,6 +3,7 @@
 namespace Symbiote\MultiValueField\Fields;
 
 use SilverStripe\Core\Convert;
+use SilverStripe\Dev\Debug;
 use SilverStripe\ORM\FieldType\DBComposite;
 use SilverStripe\ORM\FieldType\DBVarchar;
 use SilverStripe\ORM\FieldType\DBField;
@@ -23,7 +24,7 @@ class MultiValueField extends DBComposite
     /**
      * @param array
      */
-    static $composite_db = [
+    private static $composite_db = [
         "Value" => "Text",
     ];
 
@@ -37,6 +38,7 @@ class MultiValueField extends DBComposite
         if ($this->exists() && is_string($this->value)) {
             $this->value = unserialize($this->value);
         }
+        Debug::show($this->value);
         return $this->value;
     }
 

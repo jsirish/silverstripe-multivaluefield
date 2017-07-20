@@ -11,7 +11,8 @@
 		}
 	],
 	"require": {
-		"silverstripe/framework": "~4.0"
+		"silverstripe/framework": "~4.0",
+		"silverstripe/versioned": "^1@dev"
 	},
 	"extra": {
 		"installer-name": "multivaluefield",

@@ -1,0 +1,4 @@
+Symbiote\MultiValueField\Tests\MultiValueFieldTest_DataObject:
+  default:
+    Title: "MultiValueField Test"
+    MVField: ""
